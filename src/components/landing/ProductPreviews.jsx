@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sprout, TrendingUp, Shield, ShoppingCart, BarChart3, CheckCircle } from 'lucide-react';
+import { CategoryIcon } from '@/constants/valueChainIcons';
 import MarketingSection from '@/components/layout/MarketingSection';
 
 function DashboardPreview() {
@@ -34,11 +35,11 @@ function MarketplacePreview() {
       </div>
       <div className="p-3 space-y-2">
         {[
-          { title: 'Fresh Matooke — 500kg', price: 'UGX 1,200/kg', emoji: '🍌' },
-          { title: 'Ox-plough for rent', price: 'UGX 80,000/day', emoji: '🚜' },
+          { title: 'Fresh Matooke — 500kg', price: 'UGX 1,200/kg', category: 'produce' },
+          { title: 'Ox-plough for rent', price: 'UGX 80,000/day', category: 'equipment' },
         ].map((item) => (
           <div key={item.title} className="flex items-center gap-3 p-2 rounded-lg border border-gray-100">
-            <span className="text-2xl">{item.emoji}</span>
+            <CategoryIcon category={item.category} className="w-8 h-8 text-primary" />
             <div>
               <p className="text-xs font-semibold text-gray-900">{item.title}</p>
               <p className="text-xs text-emerald-600 font-medium">{item.price}</p>

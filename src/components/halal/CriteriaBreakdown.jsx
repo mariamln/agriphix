@@ -1,12 +1,13 @@
 import React from 'react';
+import { HalalCriteriaIcon } from '@/constants/valueChainIcons';
 
 const CRITERIA = [
-  { key: 'chemical_safety', label: 'Chemical Safety', icon: '🧪' },
-  { key: 'water_source', label: 'Water Source', icon: '💧' },
-  { key: 'soil_treatment', label: 'Soil Treatment', icon: '🌱' },
-  { key: 'farming_method', label: 'Farming Method', icon: '🚜' },
-  { key: 'animal_byproducts', label: 'Animal By-products', icon: '🐄' },
-  { key: 'documentation', label: 'Documentation', icon: '📄' },
+  { key: 'chemical_safety', label: 'Chemical Safety' },
+  { key: 'water_source', label: 'Water Source' },
+  { key: 'soil_treatment', label: 'Soil Treatment' },
+  { key: 'farming_method', label: 'Farming Method' },
+  { key: 'animal_byproducts', label: 'Animal By-products' },
+  { key: 'documentation', label: 'Documentation' },
 ];
 
 export default function CriteriaBreakdown({ scores }) {
@@ -14,15 +15,16 @@ export default function CriteriaBreakdown({ scores }) {
 
   return (
     <div className="space-y-2">
-      {CRITERIA.map(({ key, label, icon }) => {
+      {CRITERIA.map(({ key, label }) => {
         const score = scores[key] ?? null;
         const pct = score !== null ? score : 0;
         const color = pct >= 80 ? 'bg-emerald-500' : pct >= 60 ? 'bg-amber-500' : 'bg-red-500';
         return (
           <div key={key}>
             <div className="flex justify-between items-center mb-1">
-              <span className="text-xs text-gray-600 flex items-center gap-1">
-                {icon} {label}
+              <span className="text-xs text-gray-600 flex items-center gap-1.5">
+                <HalalCriteriaIcon criterion={key} className="w-3.5 h-3.5 text-primary" />
+                {label}
               </span>
               <span className="text-xs font-semibold text-gray-800">
                 {score !== null ? `${score}/100` : 'N/A'}

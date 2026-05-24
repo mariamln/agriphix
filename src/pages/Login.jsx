@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { loginWithGoogle, loginWithEmail, registerWithEmail } from '@/utils/auth';
 import { getAuthErrorMessage } from '@/utils/authErrors';
@@ -12,35 +12,15 @@ import {
   ROLE_DESCRIPTIONS,
   ROLES,
 } from '@/constants/profile';
+import { RoleIcon } from '@/constants/valueChainIcons';
 import { setIntendedRole } from '@/utils/intendedRole';
 import { createPageUrl } from '@/utils';
 import { getSafeReturnTo, normalizeAppPath } from '@/utils/routes';
 import {
-  Sprout,
-  MapPin,
-  ShoppingBag,
-  Package,
-  Layers,
-  Factory,
-  Store,
-  User,
-  Wrench,
   ArrowRight,
   ArrowLeft,
   CheckCircle,
 } from 'lucide-react';
-
-const ROLE_ICONS = {
-  farmer: Sprout,
-  landowner: MapPin,
-  buyer: ShoppingBag,
-  supplier: Package,
-  aggregator: Layers,
-  processor: Factory,
-  retailer: Store,
-  consumer: User,
-  service_provider: Wrench,
-};
 
 function getRedirectPath(role, searchParams) {
   const fromQuery = getSafeReturnTo(searchParams);
@@ -129,37 +109,28 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-full grid lg:grid-cols-[minmax(320px,42%)_1fr] bg-slate-50">
-      <div className="hidden lg:flex flex-col justify-between bg-gradient-to-br from-emerald-800 via-emerald-900 to-teal-950 text-white p-10 xl:p-14">
-        <div>
-          <Link to="/" className="inline-flex items-center gap-3 mb-12">
-            <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center">
-              <Sprout className="w-6 h-6" />
-            </div>
-            <div>
-              <span className="text-2xl font-bold block">Agriphix</span>
-              <span className="text-sm text-emerald-200">{t('landing.tagline')}</span>
-            </div>
-          </Link>
-          <p className="text-amber-300 text-sm font-arabic tracking-widest mb-4">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
-          <h1 className="text-3xl xl:text-4xl font-bold mb-4 leading-tight">{t('login.title')}</h1>
-          <p className="text-emerald-100 text-lg leading-relaxed max-w-md">{t('login.subtitle')}</p>
-          <ul className="mt-10 space-y-4 text-emerald-100/90">
+    <div className="min-h-full grid lg:grid-cols-[minmax(320px,42%)_1fr] bg-background">
+      <div className="hidden lg:flex flex-col justify-between hero-panel p-10 xl:p-14">
+        <div className="relative z-10">
+          <p className="text-accent text-sm font-arabic tracking-widest mb-4">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+          <h1 className="text-3xl xl:text-4xl font-bold mb-4 leading-tight tracking-tight">{t('login.title')}</h1>
+          <p className="text-primary-foreground/80 text-lg leading-relaxed max-w-md">{t('login.subtitle')}</p>
+          <ul className="mt-10 space-y-4 text-primary-foreground/85">
             {[t('login.benefit1'), t('login.benefit2'), t('login.benefit3')].map((benefit) => (
               <li key={benefit} className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-300 shrink-0 mt-0.5" />
+                <CheckCircle className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                 <span>{benefit}</span>
               </li>
             ))}
           </ul>
         </div>
-        <Link to="/" className="inline-flex items-center text-sm text-emerald-200 hover:text-white">
+        <Link to="/" className="relative z-10 inline-flex items-center text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors">
           <ArrowLeft className="w-4 h-4 mr-1" />
           {t('login.backHome')}
         </Link>
       </div>
 
-      <div className="flex flex-col min-h-full bg-white">
+      <div className="flex flex-col min-h-full bg-card">
         <main className="flex-1 px-4 sm:px-8 lg:px-10 xl:px-14 py-8 lg:py-12 overflow-y-auto">
           <div className="lg:hidden mb-8">
             <Link to="/" className="inline-flex items-center text-sm text-emerald-700 font-medium mb-4">
@@ -180,7 +151,6 @@ export default function Login() {
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {group.roles.map((role) => {
-                        const Icon = ROLE_ICONS[role] || Sprout;
                         const selected = selectedRole === role;
                         return (
                           <button
@@ -199,7 +169,7 @@ export default function Login() {
                                   selected ? 'bg-emerald-600 text-white' : 'bg-emerald-100 text-emerald-700'
                                 }`}
                               >
-                                <Icon className="w-5 h-5" />
+                                <RoleIcon role={role} className="w-5 h-5" />
                               </div>
                               <div className="min-w-0 flex-1">
                                 <div className="flex items-center justify-between gap-2 mb-0.5">
@@ -261,14 +231,9 @@ export default function Login() {
 
                   {selectedRole && (
                     <div className="flex items-center gap-3 p-4 rounded-xl bg-emerald-50 border border-emerald-200">
-                      {(() => {
-                        const Icon = ROLE_ICONS[selectedRole] || Sprout;
-                        return (
-                          <div className="w-12 h-12 rounded-lg bg-emerald-600 text-white flex items-center justify-center">
-                            <Icon className="w-6 h-6" />
-                          </div>
-                        );
-                      })()}
+                      <div className="w-12 h-12 rounded-lg bg-emerald-600 text-white flex items-center justify-center">
+                        <RoleIcon role={selectedRole} className="w-6 h-6" />
+                      </div>
                       <div>
                         <p className="text-xs text-emerald-700 font-medium uppercase tracking-wide">{t('login.yourRole')}</p>
                         <p className="text-lg font-semibold text-gray-900 capitalize">{roleLabel(selectedRole)}</p>

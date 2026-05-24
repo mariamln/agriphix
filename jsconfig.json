@@ -17,6 +17,7 @@
     "types": []
   },
   "include": [
+    "src/types/**/*.d.ts",
     "src/components/**/*.js",
     "src/components/**/*.jsx",
     "src/pages/**/*.jsx",

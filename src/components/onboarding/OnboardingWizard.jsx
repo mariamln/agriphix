@@ -21,7 +21,9 @@ import {
   roleColors,
   getSuggestedActions,
 } from '@/constants/profile';
+import { RoleIcon, formatRoleLabel } from '@/constants/valueChainIcons';
 import { getIntendedRole, clearIntendedRole } from '@/utils/intendedRole';
+import AgriphixLogo from '@/components/brand/AgriphixLogo';
 import {
   Sprout,
   TrendingUp,
@@ -158,10 +160,8 @@ export default function OnboardingWizard({ open, onComplete, onSkip }) {
 
         {step === 0 && (
           <div className="space-y-5 py-2">
-            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-6 text-center border border-emerald-100">
-              <div className="w-16 h-16 bg-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Sprout className="w-8 h-8 text-white" />
-              </div>
+            <div className="rounded-xl p-6 text-center border border-primary/15 bg-primary/5">
+              <AgriphixLogo size="lg" className="mx-auto mb-4 items-center" />
               <p className="text-gray-700">
                 Assalamu Alaikum{user?.full_name ? `, ${user.full_name}` : ''}! Agriphix connects you to
                 markets, riba-free financing, and halal certification across Uganda.
@@ -197,13 +197,16 @@ export default function OnboardingWizard({ open, onComplete, onSkip }) {
                       selected ? 'border-emerald-500 bg-emerald-50' : 'border-gray-200 hover:border-emerald-300'
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className={`text-sm font-semibold capitalize ${selected ? 'text-emerald-700' : 'text-gray-800'}`}>
-                        {role.replace(/_/g, ' ')}
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${selected ? 'bg-emerald-600 text-white' : 'bg-emerald-100 text-emerald-700'}`}>
+                        <RoleIcon role={role} className="w-4 h-4" />
+                      </div>
+                      <span className={`text-sm font-semibold capitalize flex-1 ${selected ? 'text-emerald-700' : 'text-gray-800'}`}>
+                        {formatRoleLabel(role)}
                       </span>
                       {selected && <CheckCircle className="w-4 h-4 text-emerald-600" />}
                     </div>
-                    <p className="text-xs text-gray-500">{ROLE_DESCRIPTIONS[role]}</p>
+                    <p className="text-xs text-gray-500 pl-10">{ROLE_DESCRIPTIONS[role]}</p>
                   </button>
                 );
               })}
@@ -211,7 +214,10 @@ export default function OnboardingWizard({ open, onComplete, onSkip }) {
             {form.user_roles.length > 0 && (
               <div className="flex flex-wrap gap-1">
                 {form.user_roles.map((r) => (
-                  <Badge key={r} className={roleColors[r]}>{r.replace(/_/g, ' ')}</Badge>
+                  <Badge key={r} className={`${roleColors[r]} gap-1 capitalize`}>
+                    <RoleIcon role={r} className="w-3 h-3" />
+                    {formatRoleLabel(r)}
+                  </Badge>
                 ))}
               </div>
             )}

@@ -3,7 +3,8 @@ import { api } from '@/api/client';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calendar } from 'lucide-react';
+import { Calendar, Globe, ClipboardList, FolderOpen, BookOpen, Scale, Moon } from 'lucide-react';
+import { ValueChainSegmentIcon } from '@/constants/valueChainIcons';
 import { format } from 'date-fns';
 import { formatCompactCurrency, formatCurrency } from '@/utils/currency';
 import ValueChainSelector, { VALUE_CHAIN_SEGMENTS } from '../components/financing/ValueChainSelector';
@@ -58,7 +59,9 @@ export default function Financing() {
       {/* Header */}
       <div className="bg-gradient-to-r from-emerald-800 to-teal-700 rounded-2xl p-6 text-white shadow-xl">
         <p className="text-amber-300 text-base font-arabic mb-1">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
-        <h1 className="text-2xl font-bold mb-1">☪️ {t('financing.title')}</h1>
+        <h1 className="text-2xl font-bold mb-1 flex items-center gap-2">
+          <Moon className="w-6 h-6" /> {t('financing.title')}
+        </h1>
         <p className="text-emerald-200 text-sm">{t('financing.subtitle')}</p>
         <div className="grid grid-cols-3 gap-4 mt-5">
           <div className="bg-white/10 rounded-xl p-3 text-center">
@@ -81,19 +84,20 @@ export default function Financing() {
       {/* Tabs */}
       <div className="flex gap-2 border-b border-gray-200">
         {[
-          { id: 'explore', label: '🌍 Explore Value Chain' },
-          { id: 'apply', label: '📋 Apply for Financing' },
-          { id: 'applications', label: `📁 My Applications (${requests.length})` },
+          { id: 'explore', label: 'Explore Value Chain', icon: Globe },
+          { id: 'apply', label: 'Apply for Financing', icon: ClipboardList },
+          { id: 'applications', label: `My Applications (${requests.length})`, icon: FolderOpen },
         ].map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 transition-all ${
+            className={`inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 transition-all ${
               activeTab === tab.id
                 ? 'border-emerald-600 text-emerald-700 bg-emerald-50'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
             }`}
           >
+            <tab.icon className="w-4 h-4" />
             {tab.label}
           </button>
         ))}
@@ -112,7 +116,7 @@ export default function Financing() {
               <div className="space-y-4">
                 <Card className="border-emerald-200">
                   <CardContent className="p-5">
-                    <p className="text-2xl mb-2">{seg.icon}</p>
+                    <ValueChainSegmentIcon segment={seg.id} className="w-8 h-8 text-emerald-700 mb-2" />
                     <h3 className="font-bold text-emerald-800 text-lg">{seg.label}</h3>
                     <p className="text-sm text-gray-600 mt-1 mb-4">{seg.description}</p>
                     <div className="flex flex-wrap gap-1.5 mb-4">
@@ -130,7 +134,9 @@ export default function Financing() {
                 </Card>
                 <Card className="border-amber-200 bg-amber-50">
                   <CardContent className="p-4">
-                    <p className="text-sm font-semibold text-amber-800 mb-2">⚖️ Shari'ah Reminder</p>
+                    <p className="text-sm font-semibold text-amber-800 mb-2 flex items-center gap-1.5">
+                      <Scale className="w-4 h-4" /> Shari&apos;ah Reminder
+                    </p>
                     <p className="text-xs text-amber-700">
                       All financing on Agriphix is structured to be Riba-free. No interest is charged — profit comes from trade, lease, or partnership arrangements. Always consult a qualified Shari'ah scholar for large transactions.
                     </p>
@@ -141,7 +147,7 @@ export default function Financing() {
           ) : (
             <Card className="border-dashed border-2 border-emerald-200">
               <CardContent className="py-12 text-center">
-                <p className="text-4xl mb-3">🌾</p>
+                <ValueChainSegmentIcon segment={null} className="w-10 h-10 text-emerald-500 mx-auto mb-3" />
                 <p className="text-gray-600 font-medium">Select a value chain segment above</p>
                 <p className="text-gray-400 text-sm mt-1">to see recommended Islamic finance instruments</p>
               </CardContent>
@@ -149,7 +155,9 @@ export default function Financing() {
           )}
 
           <div>
-            <h3 className="font-bold text-gray-800 mb-4">📚 All Islamic Finance Instruments Reference</h3>
+            <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-emerald-600" /> All Islamic Finance Instruments Reference
+            </h3>
             <InstrumentGuide instruments={['Murabaha', 'Ijara', 'Musharaka', 'Mudaraba', 'Salam', 'Istisna', 'Takaful', 'Sukuk', 'Qard Hasan']} />
           </div>
         </div>
@@ -159,7 +167,9 @@ export default function Financing() {
       {activeTab === 'apply' && (
         <Card className="border-emerald-200 shadow-lg">
           <CardHeader className="bg-emerald-50 border-b border-emerald-100">
-            <CardTitle className="text-emerald-800">📋 Islamic Finance Application</CardTitle>
+            <CardTitle className="text-emerald-800 flex items-center gap-2">
+              <ClipboardList className="w-5 h-5" /> Islamic Finance Application
+            </CardTitle>
             <p className="text-sm text-gray-500 mt-1">Fill in your details and get an AI-powered Shari'ah-compliant structure recommendation.</p>
           </CardHeader>
           <CardContent className="p-6">
@@ -193,7 +203,7 @@ export default function Financing() {
           ) : filteredRequests.length === 0 ? (
             <Card className="border-dashed border-2 border-gray-200">
               <CardContent className="py-12 text-center">
-                <p className="text-3xl mb-2">📁</p>
+                <FolderOpen className="w-10 h-10 text-gray-400 mx-auto mb-2" />
                 <p className="text-gray-500">No applications found</p>
                 <Button className="mt-4 bg-emerald-700 hover:bg-emerald-800" onClick={() => setActiveTab('apply')}>
                   Submit First Application

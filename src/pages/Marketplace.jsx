@@ -13,16 +13,32 @@ import { useSellerProfiles } from '@/hooks/useSellerProfiles';
 import ContentGrid from '@/components/layout/ContentGrid';
 import { useTranslation } from '@/i18n/LanguageContext';
 
+import {
+  CategoryIcon,
+  RoleIcon,
+  formatRoleLabel,
+  profileHasRole,
+  MARKETPLACE_ROLE_FILTERS,
+} from '@/constants/valueChainIcons';
+
 const CATEGORIES = ['all', 'produce', 'equipment', 'livestock', 'seeds', 'other'];
 const TYPES = ['all', 'sale', 'rent', 'exchange'];
 
-const categoryEmoji = { produce: '🌽', equipment: '🚜', livestock: '🐄', seeds: '🌱', other: '📦' };
+const categoryLabels = {
+  all: 'All',
+  produce: 'Produce',
+  equipment: 'Equipment',
+  livestock: 'Livestock',
+  seeds: 'Seeds',
+  other: 'Other',
+};
 
 export default function Marketplace() {
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
   const [filterType, setFilterType] = useState('all');
+  const [filterRole, setFilterRole] = useState('all');
   const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
   const [selectedListing, setSelectedListing] = useState(null);
@@ -44,9 +60,14 @@ export default function Marketplace() {
     if (filterCategory !== 'all' && l.category !== filterCategory) return false;
     if (filterType !== 'all' && l.listing_type !== filterType) return false;
     if (verifiedOnly && !isVerifiedSeller(l)) return false;
-    if (search && !l.title.toLowerCase().includes(search.toLowerCase()) &&
-        !l.location.toLowerCase().includes(search.toLowerCase()) &&
-        !l.description?.toLowerCase().includes(search.toLowerCase())) return false;
+    if (filterRole !== 'all' && !profileHasRole(getProfileForSeller(l), filterRole)) return false;
+    if (search) {
+      const q = search.toLowerCase();
+      const inTitle = l.title?.toLowerCase().includes(q);
+      const inLocation = l.location?.toLowerCase().includes(q);
+      const inDescription = l.description?.toLowerCase().includes(q);
+      if (!inTitle && !inLocation && !inDescription) return false;
+    }
     return true;
   });
 
@@ -92,18 +113,45 @@ export default function Marketplace() {
             {t('marketplace.verifiedOnly')}
           </Label>
         </div>
+      </div>
+
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Category</p>
         <div className="flex gap-2 flex-wrap">
-          {CATEGORIES.map(cat => (
-            <Button key={cat} size="sm" variant={filterCategory === cat ? 'default' : 'outline'}
+          {CATEGORIES.map((cat) => (
+            <Button
+              key={cat}
+              size="sm"
+              variant={filterCategory === cat ? 'default' : 'outline'}
               onClick={() => setFilterCategory(cat)}
-              className={filterCategory === cat ? 'bg-emerald-600' : ''}>
-              {cat === 'all' ? 'All' : `${categoryEmoji[cat]} ${cat}`}
+              className={filterCategory === cat ? 'bg-emerald-600 gap-1.5' : 'gap-1.5'}
+            >
+              <CategoryIcon category={cat} className="w-4 h-4" fallback="grid" />
+              {categoryLabels[cat] || cat}
             </Button>
           ))}
         </div>
       </div>
 
-      <div className="flex gap-2">
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Value chain</p>
+        <div className="flex gap-2 flex-wrap">
+          {MARKETPLACE_ROLE_FILTERS.map((role) => (
+            <Button
+              key={role}
+              size="sm"
+              variant={filterRole === role ? 'default' : 'outline'}
+              onClick={() => setFilterRole(role)}
+              className={filterRole === role ? 'bg-emerald-600 gap-1.5 capitalize' : 'gap-1.5 capitalize'}
+            >
+              <RoleIcon role={role === 'all' ? null : role} className="w-4 h-4" />
+              {role === 'all' ? 'All roles' : formatRoleLabel(role)}
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex gap-2 flex-wrap items-center">
         {TYPES.map(type => (
           <Button key={type} size="sm" variant={filterType === type ? 'default' : 'outline'}
             onClick={() => setFilterType(type)}

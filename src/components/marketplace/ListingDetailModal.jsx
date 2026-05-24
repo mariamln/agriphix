@@ -10,11 +10,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { format } from 'date-fns';
 import { formatCurrency } from '@/utils/currency';
 
-const categoryEmoji = { produce: '🌽', equipment: '🚜', livestock: '🐄', seeds: '🌱', other: '📦' };
+import SellerBadge from './SellerBadge';
+import SellerRoleBadge from './SellerRoleBadge';
+import { CategoryIcon } from '@/constants/valueChainIcons';
+
 const typeColors = { sale: 'bg-emerald-100 text-emerald-700', rent: 'bg-blue-100 text-blue-700', exchange: 'bg-amber-100 text-amber-700' };
 const msgTypeColors = { inquiry: 'bg-blue-50 border-blue-200', offer: 'bg-emerald-50 border-emerald-200', counter_offer: 'bg-amber-50 border-amber-200', accept: 'bg-green-50 border-green-200', decline: 'bg-red-50 border-red-200', general: 'bg-gray-50 border-gray-200' };
-
-import SellerBadge from './SellerBadge';
 
 export default function ListingDetailModal({ listing, sellerProfile, messages, onClose }) {
   const qc = useQueryClient();
@@ -71,12 +72,16 @@ export default function ListingDetailModal({ listing, sellerProfile, messages, o
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex justify-between items-center p-5 border-b bg-white shrink-0">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">{categoryEmoji[listing.category]}</span>
+          <div className="flex items-center gap-3">
+            <CategoryIcon category={listing.category} className="w-8 h-8 text-primary" />
             <div>
               <h2 className="font-bold text-gray-900 leading-tight">{listing.title}</h2>
-              <div className="flex gap-2 mt-0.5">
-                <Badge className={typeColors[listing.listing_type]}>{listing.listing_type}</Badge>
+              <div className="flex flex-wrap gap-2 mt-1">
+                <Badge className="bg-muted text-foreground gap-1 capitalize">
+                  <CategoryIcon category={listing.category} className="w-3 h-3" />
+                  {listing.category}
+                </Badge>
+                <Badge className={`${typeColors[listing.listing_type]} capitalize`}>{listing.listing_type}</Badge>
                 {listing.negotiable && <Badge className="bg-amber-100 text-amber-700">Negotiable</Badge>}
               </div>
             </div>
@@ -118,6 +123,7 @@ export default function ListingDetailModal({ listing, sellerProfile, messages, o
 
             <div className="border-t pt-3 space-y-1.5 text-sm">
               <p className="font-semibold text-gray-800">{listing.seller_name}</p>
+              <SellerRoleBadge profile={sellerProfile} size="md" />
               <SellerBadge profile={sellerProfile} listing={listing} size="lg" />
               {listing.seller_email && <div className="flex items-center gap-1.5 text-gray-600"><Mail className="w-3.5 h-3.5" />{listing.seller_email}</div>}
               {listing.seller_phone && <div className="flex items-center gap-1.5 text-gray-600"><Phone className="w-3.5 h-3.5" />{listing.seller_phone}</div>}

@@ -6,6 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { CategoryIcon, Rocket } from '@/constants/valueChainIcons';
+
+const CATEGORY_OPTIONS = [
+  { value: 'produce', label: 'Produce' },
+  { value: 'equipment', label: 'Equipment' },
+  { value: 'livestock', label: 'Livestock' },
+  { value: 'seeds', label: 'Seeds' },
+  { value: 'other', label: 'Other' },
+];
 
 export default function CreateListingModal({ onClose }) {
   const qc = useQueryClient();
@@ -60,11 +69,14 @@ export default function CreateListingModal({ onClose }) {
               <Select value={form.category} onValueChange={v => set('category', v)}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="produce">🌽 Produce</SelectItem>
-                  <SelectItem value="equipment">🚜 Equipment</SelectItem>
-                  <SelectItem value="livestock">🐄 Livestock</SelectItem>
-                  <SelectItem value="seeds">🌱 Seeds</SelectItem>
-                  <SelectItem value="other">📦 Other</SelectItem>
+                  {CATEGORY_OPTIONS.map(({ value, label }) => (
+                    <SelectItem key={value} value={value}>
+                      <span className="flex items-center gap-2">
+                        <CategoryIcon category={value} className="w-4 h-4" />
+                        {label}
+                      </span>
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -173,7 +185,7 @@ export default function CreateListingModal({ onClose }) {
           <div className="flex gap-3 pt-2">
             <Button type="button" variant="outline" onClick={onClose} className="flex-1">Cancel</Button>
             <Button type="submit" disabled={submitting} className="flex-1 bg-emerald-600 hover:bg-emerald-700">
-              {submitting ? 'Posting...' : '🚀 Post Listing'}
+              {submitting ? 'Posting...' : (<><Rocket className="w-4 h-4 mr-2" /> Post Listing</>)}
             </Button>
           </div>
         </form>

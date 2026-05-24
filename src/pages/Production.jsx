@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sprout, Plus, X, MapPin, Calendar, TrendingUp } from 'lucide-react';
+import { ProductionTypeIcon, PawPrint, Milk } from '@/constants/valueChainIcons';
 import { formatDisplayDate } from '@/utils/dates';
 import ContentGrid from '@/components/layout/ContentGrid';
 import { useTranslation } from '@/i18n/LanguageContext';
@@ -149,13 +150,13 @@ export default function Production() {
               <div className="flex gap-3">
                 <Button type="button" size="sm"
                   onClick={() => setFormData({...formData, production_type: 'crop'})}
-                  className={formData.production_type === 'crop' ? 'bg-emerald-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}>
-                  🌾 Crop
+                  className={`gap-1.5 ${formData.production_type === 'crop' ? 'bg-emerald-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
+                  <ProductionTypeIcon type="crop" className="w-4 h-4" /> Crop
                 </Button>
                 <Button type="button" size="sm"
                   onClick={() => setFormData({...formData, production_type: 'livestock'})}
-                  className={formData.production_type === 'livestock' ? 'bg-amber-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}>
-                  🐄 Livestock
+                  className={`gap-1.5 ${formData.production_type === 'livestock' ? 'bg-amber-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
+                  <ProductionTypeIcon type="livestock" className="w-4 h-4" /> Livestock
                 </Button>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -245,10 +246,11 @@ export default function Production() {
 
       {/* Type Filter */}
       <div className="flex gap-2 mb-1">
-        {[{id:'all',label:'All'},{id:'crop',label:'🌾 Crops'},{id:'livestock',label:'🐄 Livestock'}].map((tab) => (
+        {[{id:'all',label:'All',type:null},{id:'crop',label:'Crops',type:'crop'},{id:'livestock',label:'Livestock',type:'livestock'}].map((tab) => (
           <Button key={tab.id} size="sm" variant={filterType === tab.id ? 'default' : 'outline'}
             onClick={() => setFilterType(tab.id)}
-            className={filterType === tab.id ? 'bg-emerald-600' : ''}>
+            className={`gap-1.5 ${filterType === tab.id ? 'bg-emerald-600' : ''}`}>
+            {tab.type && <ProductionTypeIcon type={tab.type} className="w-4 h-4" />}
             {tab.label}
           </Button>
         ))}
@@ -282,7 +284,7 @@ export default function Production() {
                 <div className="flex justify-between items-start">
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <span>{crop.production_type === 'livestock' ? '🐄' : '🌾'}</span>
+                      <ProductionTypeIcon type={crop.production_type} className="w-5 h-5 text-primary" />
                       <CardTitle className="text-xl font-bold text-gray-900">
                         {crop.crop_name} {crop.variety && `- ${crop.variety}`}
                       </CardTitle>
@@ -313,10 +315,16 @@ export default function Production() {
                   {crop.location}
                 </div>
                 {crop.head_count > 0 && (
-                  <div className="text-sm text-gray-600">🐾 Head count: <span className="font-semibold">{crop.head_count} animals</span></div>
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <PawPrint className="w-4 h-4 text-gray-400" />
+                    Head count: <span className="font-semibold">{crop.head_count} animals</span>
+                  </div>
                 )}
                 {crop.livestock_product && (
-                  <div className="text-sm text-gray-600">🥛 Product: <span className="font-semibold">{crop.livestock_product}</span></div>
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <Milk className="w-4 h-4 text-gray-400" />
+                    Product: <span className="font-semibold">{crop.livestock_product}</span>
+                  </div>
                 )}
                 {crop.expected_yield > 0 && (
                   <div className="pt-2 border-t border-gray-100">

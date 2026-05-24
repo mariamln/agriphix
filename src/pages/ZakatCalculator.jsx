@@ -2,23 +2,25 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { BarChart3 } from 'lucide-react';
 import { formatCurrency, NISAB_UGX, GOLD_PRICE_UGX_PER_GRAM, NISAB_GOLD_GRAMS } from '@/utils/currency';
+import { ZakatCategoryIcon, Scale, Moon } from '@/constants/valueChainIcons';
 
 const ZAKAT_RATE = 0.025;
 
 const categories = [
-  { id: 'cash', label: '💵 Cash & Bank Savings', description: 'Cash on hand and in bank accounts' },
-  { id: 'crops', label: '🌾 Crop Revenue', description: 'Revenue from agricultural produce (after expenses)' },
-  { id: 'livestock', label: '🐄 Livestock Value', description: 'Market value of zakatable livestock' },
-  { id: 'gold_silver', label: '🥇 Gold & Silver', description: 'Market value of gold and silver holdings' },
-  { id: 'business', label: '🏪 Business Inventory', description: 'Value of goods held for trade' },
-  { id: 'investments', label: '📈 Investments', description: 'Stocks, shares, and other investments' },
-  { id: 'receivables', label: '🤝 Money Owed to You', description: 'Loans given out expected to be repaid' },
+  { id: 'cash', label: 'Cash & Bank Savings', description: 'Cash on hand and in bank accounts' },
+  { id: 'crops', label: 'Crop Revenue', description: 'Revenue from agricultural produce (after expenses)' },
+  { id: 'livestock', label: 'Livestock Value', description: 'Market value of zakatable livestock' },
+  { id: 'gold_silver', label: 'Gold & Silver', description: 'Market value of gold and silver holdings' },
+  { id: 'business', label: 'Business Inventory', description: 'Value of goods held for trade' },
+  { id: 'investments', label: 'Investments', description: 'Stocks, shares, and other investments' },
+  { id: 'receivables', label: 'Money Owed to You', description: 'Loans given out expected to be repaid' },
 ];
 
 const deductions = [
-  { id: 'debts', label: '💳 Debts & Liabilities', description: 'Money you owe others (due within the year)' },
-  { id: 'expenses', label: '🧾 Business Expenses', description: 'Outstanding business expenses' },
+  { id: 'debts', label: 'Debts & Liabilities', description: 'Money you owe others (due within the year)' },
+  { id: 'expenses', label: 'Business Expenses', description: 'Outstanding business expenses' },
 ];
 
 export default function ZakatCalculator() {
@@ -44,7 +46,9 @@ export default function ZakatCalculator() {
       {/* Header */}
       <div className="bg-gradient-to-r from-emerald-800 to-teal-700 rounded-2xl p-6 text-white shadow-xl">
         <p className="text-amber-300 text-base font-arabic mb-1">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
-        <h1 className="text-2xl font-bold mb-1">☪️ Zakat Calculator</h1>
+        <h1 className="text-2xl font-bold mb-1 flex items-center gap-2">
+          <Moon className="w-6 h-6" /> Zakat Calculator
+        </h1>
         <p className="text-emerald-200 text-sm">
           Calculate your annual Zakat obligation accurately. Nisab threshold: ~{formatCurrency(NISAB_UGX)} (based on {NISAB_GOLD_GRAMS}g of gold at {formatCurrency(GOLD_PRICE_UGX_PER_GRAM)}/g).
         </p>
@@ -53,7 +57,9 @@ export default function ZakatCalculator() {
       {/* Nisab Info */}
       <Card className="border-amber-200 bg-amber-50">
         <CardContent className="p-4 text-sm text-amber-800">
-          <p className="font-semibold mb-1">⚖️ About Nisab</p>
+          <p className="font-semibold mb-1 flex items-center gap-1.5">
+            <Scale className="w-4 h-4" /> About Nisab
+          </p>
           <p>Zakat is obligatory if your net zakatable wealth has been at or above the Nisab for a full lunar year (Hawl). The Nisab is equivalent to 85g of gold or 595g of silver — use whichever is lower. Zakat rate is <strong>2.5%</strong> of net zakatable wealth.</p>
         </CardContent>
       </Card>
@@ -61,13 +67,18 @@ export default function ZakatCalculator() {
       {/* Assets */}
       <Card className="border-emerald-200">
         <CardHeader className="bg-emerald-50 border-b border-emerald-100 py-4">
-          <CardTitle className="text-emerald-800 text-base">📊 Zakatable Assets</CardTitle>
+          <CardTitle className="text-emerald-800 text-base flex items-center gap-2">
+            <BarChart3 className="w-5 h-5" /> Zakatable Assets
+          </CardTitle>
         </CardHeader>
         <CardContent className="p-5 space-y-4">
           {categories.map(cat => (
             <div key={cat.id} className="flex items-center gap-4">
               <div className="flex-1">
-                <p className="text-sm font-medium text-gray-800">{cat.label}</p>
+                <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
+                  <ZakatCategoryIcon asset={cat.id} className="w-4 h-4 text-emerald-600" />
+                  {cat.label}
+                </p>
                 <p className="text-xs text-gray-400">{cat.description}</p>
               </div>
               <div className="w-40">
@@ -101,7 +112,10 @@ export default function ZakatCalculator() {
           {deductions.map(ded => (
             <div key={ded.id} className="flex items-center gap-4">
               <div className="flex-1">
-                <p className="text-sm font-medium text-gray-800">{ded.label}</p>
+                <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
+                  <ZakatCategoryIcon deduction={ded.id} className="w-4 h-4 text-red-600" />
+                  {ded.label}
+                </p>
                 <p className="text-xs text-gray-400">{ded.description}</p>
               </div>
               <div className="w-40">

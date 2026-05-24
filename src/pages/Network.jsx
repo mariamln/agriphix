@@ -5,8 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Users, MapPin, Phone, Building2, CheckCircle, Search } from 'lucide-react';
+import { MapPin, Phone, Building2, CheckCircle, Search } from 'lucide-react';
 import MyProfileForm from '../components/network/MyProfileForm';
+import SellerRoleBadge from '../components/marketplace/SellerRoleBadge';
+import { RoleIcon, formatRoleLabel, MARKETPLACE_ROLE_FILTERS } from '@/constants/valueChainIcons';
 import ContentGrid from '@/components/layout/ContentGrid';
 import { useTranslation } from '@/i18n/LanguageContext';
 
@@ -19,18 +21,6 @@ export default function Network() {
     queryKey: ['userProfiles'],
     queryFn: () => api.entities.UserProfile.list('-updated_date', 100)
   });
-
-  const roleColors = {
-    farmer: 'bg-green-100 text-green-700',
-    landowner: 'bg-blue-100 text-blue-700',
-    buyer: 'bg-purple-100 text-purple-700',
-    supplier: 'bg-amber-100 text-amber-700',
-    aggregator: 'bg-pink-100 text-pink-700',
-    processor: 'bg-indigo-100 text-indigo-700',
-    retailer: 'bg-cyan-100 text-cyan-700',
-    consumer: 'bg-gray-100 text-gray-700',
-    service_provider: 'bg-orange-100 text-orange-700'
-  };
 
   const filteredProfiles = profiles
     .filter(p => filterRole === 'all' || p.user_role === filterRole || p.user_roles?.includes(filterRole))
@@ -67,23 +57,16 @@ export default function Network() {
 
       {/* Role Filters */}
       <div className="flex flex-wrap gap-2">
-        <Button
-          variant={filterRole === 'all' ? 'default' : 'outline'}
-          onClick={() => setFilterRole('all')}
-          size="sm"
-          className={filterRole === 'all' ? 'bg-emerald-600' : ''}
-        >
-          All
-        </Button>
-        {['farmer', 'landowner', 'buyer', 'supplier', 'aggregator', 'processor', 'retailer', 'service_provider'].map(role => (
+        {MARKETPLACE_ROLE_FILTERS.map((role) => (
           <Button
             key={role}
             variant={filterRole === role ? 'default' : 'outline'}
             onClick={() => setFilterRole(role)}
             size="sm"
-            className={filterRole === role ? 'bg-emerald-600' : ''}
+            className={`gap-1.5 capitalize ${filterRole === role ? 'bg-emerald-600' : ''}`}
           >
-            {role.replace(/_/g, ' ').charAt(0).toUpperCase() + role.replace(/_/g, ' ').slice(1)}
+            <RoleIcon role={role === 'all' ? null : role} className="w-4 h-4" />
+            {role === 'all' ? 'All' : formatRoleLabel(role)}
           </Button>
         ))}
       </div>
@@ -101,15 +84,13 @@ export default function Network() {
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex items-center space-x-2">
                     <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center">
-                      <Users className="w-6 h-6 text-white" />
+                      <RoleIcon role={profile.user_role} className="w-6 h-6 text-white" />
                     </div>
                     {profile.verified && (
                       <CheckCircle className="w-5 h-5 text-blue-500" />
                     )}
                   </div>
-                  <Badge className={roleColors[profile.user_role]}>
-                    {profile.user_role.replace(/_/g, ' ')}
-                  </Badge>
+                  <SellerRoleBadge profile={profile} size="md" />
                 </div>
                 <CardTitle className="text-lg font-bold text-gray-900">
                   {profile.organization_name || 'Unknown Organization'}

@@ -1,10 +1,10 @@
 import React from 'react';
+import { ValueChainSegmentIcon } from '@/constants/valueChainIcons';
 
 export const VALUE_CHAIN_SEGMENTS = [
   {
     id: 'land',
     label: 'Land',
-    icon: '🌍',
     description: 'Acquisition, leasing & development',
     instruments: ['Ijara', 'Musharaka', 'Murabaha'],
     color: 'emerald',
@@ -12,7 +12,6 @@ export const VALUE_CHAIN_SEGMENTS = [
   {
     id: 'farming_inputs',
     label: 'Farming Inputs',
-    icon: '🌱',
     description: 'Seeds, fertilizers, pesticides',
     instruments: ['Murabaha', 'Salam', 'Qard Hasan'],
     color: 'green',
@@ -20,7 +19,6 @@ export const VALUE_CHAIN_SEGMENTS = [
   {
     id: 'machinery',
     label: 'Machinery',
-    icon: '🚜',
     description: 'Tractors, irrigation, equipment',
     instruments: ['Ijara', 'Murabaha', 'Istisna'],
     color: 'teal',
@@ -28,7 +26,6 @@ export const VALUE_CHAIN_SEGMENTS = [
   {
     id: 'advisory',
     label: 'Advisory Services',
-    icon: '🧠',
     description: 'Agronomists, consultants, tech',
     instruments: ['Mudaraba', 'Musharaka', 'Ijara'],
     color: 'cyan',
@@ -36,7 +33,6 @@ export const VALUE_CHAIN_SEGMENTS = [
   {
     id: 'logistics',
     label: 'Logistics & Storage',
-    icon: '🏭',
     description: 'Warehouses, cold chain, silos',
     instruments: ['Ijara', 'Istisna', 'Musharaka'],
     color: 'blue',
@@ -44,7 +40,6 @@ export const VALUE_CHAIN_SEGMENTS = [
   {
     id: 'delivery',
     label: 'Delivery & Distribution',
-    icon: '🚚',
     description: 'Transport, last-mile delivery',
     instruments: ['Ijara', 'Murabaha', 'Musharaka'],
     color: 'indigo',
@@ -52,7 +47,6 @@ export const VALUE_CHAIN_SEGMENTS = [
   {
     id: 'suppliers',
     label: 'Suppliers & Processors',
-    icon: '🏭',
     description: 'Input suppliers, food processors',
     instruments: ['Murabaha', 'Istisna', 'Musharaka'],
     color: 'violet',
@@ -60,7 +54,6 @@ export const VALUE_CHAIN_SEGMENTS = [
   {
     id: 'traceability',
     label: 'Traceability Systems',
-    icon: '🔍',
     description: 'Blockchain, QR, certification',
     instruments: ['Murabaha', 'Ijara', 'Sukuk'],
     color: 'purple',
@@ -68,7 +61,6 @@ export const VALUE_CHAIN_SEGMENTS = [
   {
     id: 'export',
     label: 'Export Markets',
-    icon: '🌐',
     description: 'Export financing & trade',
     instruments: ['Murabaha', 'Salam', 'Sukuk'],
     color: 'amber',
@@ -76,7 +68,6 @@ export const VALUE_CHAIN_SEGMENTS = [
   {
     id: 'shariah_compliance',
     label: "Shari'ah Compliance",
-    icon: '⚖️',
     description: 'Audits, certification, review',
     instruments: ['Qard Hasan', 'Musharaka', 'Takaful'],
     color: 'orange',
@@ -124,7 +115,7 @@ export default function ValueChainSelector({ selected, onSelect }) {
               onClick={() => onSelect(seg.id)}
               className={`border-2 rounded-xl p-3 text-left transition-all hover:shadow-md ${cls}`}
             >
-              <span className="text-xl block mb-1">{seg.icon}</span>
+              <ValueChainSegmentIcon segment={seg.id} className="w-5 h-5 mb-1.5" />
               <p className="font-semibold text-xs leading-tight">{seg.label}</p>
               <p className={`text-xs mt-0.5 leading-tight ${isActive ? 'text-white/80' : 'text-gray-500'}`}>{seg.description}</p>
             </button>

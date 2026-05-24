@@ -1,29 +1,44 @@
 import React from 'react';
 import { formatCurrency } from '@/utils/currency';
-import { MapPin, MessageSquare, Tag, Clock } from 'lucide-react';
+import { MapPin, MessageSquare } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { format } from 'date-fns';
-
-const categoryEmoji = { produce: '🌽', equipment: '🚜', livestock: '🐄', seeds: '🌱', other: '📦' };
-const typeColors = { sale: 'bg-emerald-100 text-emerald-700', rent: 'bg-blue-100 text-blue-700', exchange: 'bg-amber-100 text-amber-700' };
-const gradeColors = { premium: 'bg-purple-100 text-purple-700', grade_a: 'bg-green-100 text-green-700', grade_b: 'bg-yellow-100 text-yellow-700', standard: 'bg-gray-100 text-gray-600' };
-
 import SellerBadge from './SellerBadge';
+import SellerRoleBadge from './SellerRoleBadge';
+import { CategoryIcon } from '@/constants/valueChainIcons';
+
+const typeColors = {
+  sale: 'bg-emerald-100 text-emerald-700',
+  rent: 'bg-blue-100 text-blue-700',
+  exchange: 'bg-amber-100 text-amber-700',
+};
+const gradeColors = {
+  premium: 'bg-purple-100 text-purple-700',
+  grade_a: 'bg-green-100 text-green-700',
+  grade_b: 'bg-yellow-100 text-yellow-700',
+  standard: 'bg-gray-100 text-gray-600',
+};
 
 export default function ListingCard({ listing, sellerProfile, messageCount, onClick }) {
   return (
-    <Card onClick={onClick} className="cursor-pointer hover:shadow-xl transition-all duration-200 border hover:border-emerald-300 group overflow-hidden">
-      {/* Image or emoji placeholder */}
+    <Card
+      onClick={onClick}
+      className="cursor-pointer hover:shadow-xl transition-all duration-200 border hover:border-emerald-300 group overflow-hidden"
+    >
       <div className="h-40 bg-gradient-to-br from-emerald-50 to-teal-50 flex items-center justify-center overflow-hidden relative">
         {listing.image_url ? (
           <img src={listing.image_url} alt={listing.title} className="w-full h-full object-cover" />
         ) : (
-          <span className="text-7xl opacity-60">{categoryEmoji[listing.category]}</span>
+          <CategoryIcon category={listing.category} className="w-16 h-16 text-primary/40" />
         )}
-        <div className="absolute top-2 left-2">
-          <Badge className={typeColors[listing.listing_type]}>{listing.listing_type}</Badge>
+        <div className="absolute top-2 left-2 flex flex-wrap gap-1.5">
+          <Badge className="bg-white/90 text-foreground border border-border/60 gap-1 capitalize shadow-soft">
+            <CategoryIcon category={listing.category} className="w-3 h-3 text-primary" />
+            {listing.category}
+          </Badge>
+          <Badge className={`${typeColors[listing.listing_type]} capitalize`}>
+            {listing.listing_type}
+          </Badge>
         </div>
         {listing.negotiable && (
           <div className="absolute top-2 right-2">
@@ -36,9 +51,11 @@ export default function ListingCard({ listing, sellerProfile, messageCount, onCl
         <h3 className="font-bold text-gray-900 text-base leading-tight group-hover:text-emerald-700 transition-colors line-clamp-2">
           {listing.title}
         </h3>
-        <SellerBadge profile={sellerProfile} listing={listing} />
+        <div className="flex flex-wrap items-center gap-1.5">
+          <SellerRoleBadge profile={sellerProfile} />
+          <SellerBadge profile={sellerProfile} listing={listing} />
+        </div>
 
-        {/* Price */}
         <div className="flex items-baseline gap-1">
           <span className="text-2xl font-bold text-emerald-600">{formatCurrency(listing.price)}</span>
           {listing.price_unit && <span className="text-sm text-gray-500">/ {listing.price_unit}</span>}

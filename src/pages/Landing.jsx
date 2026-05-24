@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import ProductPreviews from '@/components/landing/ProductPreviews';
 import MarketingSection from '@/components/layout/MarketingSection';
 import { useTranslation } from '@/i18n/LanguageContext';
+import AgriphixLogo from '@/components/brand/AgriphixLogo';
 import { 
   Sprout,
   TrendingUp, 
@@ -130,27 +131,27 @@ export default function Landing() {
   const heroImage = galleryImages[0].src;
 
   return (
-    <div className="bg-white">
-      <section className="w-full py-16 md:py-24 lg:py-28 bg-gradient-to-br from-emerald-50 via-white to-amber-50/80 overflow-hidden">
+    <div className="bg-background">
+      <section className="w-full py-16 md:py-24 lg:py-28 bg-gradient-to-br from-primary/5 via-background to-accent/10 overflow-hidden">
         <div className="marketing-inner grid lg:grid-cols-2 gap-12 xl:gap-16 items-center">
           <div className="text-left">
-            <p className="text-amber-600 text-sm font-medium tracking-wide uppercase mb-4">
+            <p className="text-accent text-sm font-semibold tracking-wide uppercase mb-4">
               {t('landing.hero.badge')}
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
               {t('landing.hero.title1')}
-              <span className="block bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
+              <span className="block text-gradient-brand">
                 {t('landing.hero.title2')}
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 max-w-xl mb-10">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-xl mb-10 leading-relaxed">
               {t('landing.hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 onClick={goToLogin}
                 size="lg"
-                className="bg-emerald-600 hover:bg-emerald-700 text-lg px-8 py-6"
+                className="text-lg px-8 py-6 h-auto"
               >
                 {t('landing.cta.start')} <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
@@ -158,28 +159,28 @@ export default function Landing() {
                 onClick={scrollToFeatures}
                 variant="outline"
                 size="lg"
-                className="text-lg px-8 py-6 border-emerald-300 text-emerald-700 hover:bg-emerald-50"
+                className="text-lg px-8 py-6 h-auto"
               >
                 {t('landing.cta.learn')}
               </Button>
             </div>
           </div>
           <div className="relative">
-            <div className="absolute -inset-4 bg-gradient-to-br from-emerald-200/40 to-amber-200/30 rounded-3xl blur-2xl" />
+            <div className="absolute -inset-4 bg-gradient-to-br from-primary/15 to-accent/10 rounded-3xl blur-2xl" />
             <img
               src={heroImage}
               alt="Ugandan agriculture"
-              className="relative rounded-2xl shadow-2xl w-full h-[320px] md:h-[420px] object-cover border-4 border-white"
+              className="relative rounded-2xl shadow-float w-full h-[320px] md:h-[420px] object-cover border border-border/60"
             />
-            <div className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg p-3 border border-emerald-100 hidden sm:block">
-              <p className="text-xs text-gray-500">Trusted by farmers across</p>
-              <p className="font-bold text-emerald-700">30+ districts in Uganda</p>
+            <div className="absolute -bottom-4 -left-4 bg-card rounded-xl shadow-elevated p-4 border border-border/60 hidden sm:block">
+              <p className="text-xs text-muted-foreground">Trusted by farmers across</p>
+              <p className="font-bold text-primary">30+ districts in Uganda</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="w-full py-10 bg-white border-y border-emerald-100">
+      <section className="w-full py-10 bg-card border-y border-border/60">
         <div className="marketing-inner grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
           {galleryImages.map((img) => (
             <img
@@ -193,7 +194,7 @@ export default function Landing() {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-14 bg-emerald-700">
+      <section className="w-full py-12 md:py-14 bg-primary text-primary-foreground">
         <div className="marketing-inner grid grid-cols-2 md:grid-cols-4 gap-8 text-white">
             {pillars.map((pillar) => (
               <div key={pillar.label}>
@@ -280,19 +281,17 @@ export default function Landing() {
                 ))}
               </ul>
             </div>
-            <div className="bg-white rounded-2xl shadow-xl p-8 border border-emerald-100">
+            <div className="surface-card p-8 shadow-elevated">
               <div>
-                <div className="w-20 h-20 bg-gradient-to-br from-emerald-600 to-teal-700 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
-                  <Sprout className="w-10 h-10 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Ready to Get Started?</h3>
-                <p className="text-gray-600 mb-6">
+                <AgriphixLogo size="xl" className="mb-6" />
+                <h3 className="text-2xl font-bold text-foreground mb-4">Ready to Get Started?</h3>
+                <p className="text-muted-foreground mb-6">
                   Create your free account and join Uganda&apos;s halal agricultural community today.
                 </p>
                 <Button 
                   onClick={goToLogin}
                   size="lg"
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-lg py-6"
+                  className="w-full text-lg py-6 h-auto"
                 >
                   Create Free Account
                 </Button>

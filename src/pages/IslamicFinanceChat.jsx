@@ -4,20 +4,21 @@ import { Button } from '@/components/ui/button';
 import { Send, Loader2, RefreshCw } from 'lucide-react';
 import ChatMessage from '../components/islamicfinance/ChatMessage';
 import TopicButton from '../components/islamicfinance/TopicButton';
+import { VALUE_CHAIN_SEGMENT_ICONS, Moon } from '@/constants/valueChainIcons';
 
 const TOPICS = [
-  { label: '🌍 Land (Ijara/Musharaka)', prompt: 'How can Islamic finance be used for agricultural land acquisition through Ijara or Musharaka?' },
-  { label: '🌱 Farming Inputs (Murabaha)', prompt: 'Explain how Murabaha financing works for purchasing farming inputs like seeds, fertilizers, and pesticides.' },
-  { label: '🚜 Machinery (Ijara)', prompt: 'How does Islamic Ijara financing work for acquiring agricultural machinery and equipment?' },
-  { label: '🧠 Advisory Services', prompt: 'What Islamic finance structures support agricultural advisory and consulting services for farmers?' },
-  { label: '🚚 Logistics & Storage', prompt: 'How can Islamic finance support agricultural logistics, warehousing, and cold storage?' },
-  { label: '📦 Delivery & Distribution', prompt: 'What Islamic financing models are suitable for agricultural delivery and distribution networks?' },
-  { label: '🏭 Suppliers & Processors', prompt: 'How can agricultural suppliers and food processors access Islamic financing?' },
-  { label: '🔍 Traceability Systems', prompt: 'How can Islamic finance support investment in agricultural traceability and blockchain systems?' },
-  { label: '🌐 Export Markets', prompt: 'What Islamic finance instruments support farmers targeting export markets?' },
-  { label: '⚖️ Shari\'ah Compliance', prompt: 'What are the key Shari\'ah principles agricultural finance structures must comply with?' },
-  { label: '🌾 Salam (Pre-Harvest)', prompt: 'Explain how Salam contracts work as forward financing for crop production before harvest.' },
-  { label: '🤝 Mudaraba Partnership', prompt: 'How can Mudaraba profit-sharing arrangements finance farming operations in Uganda?' },
+  { segment: 'land', label: 'Land (Ijara/Musharaka)', prompt: 'How can Islamic finance be used for agricultural land acquisition through Ijara or Musharaka?' },
+  { segment: 'farming_inputs', label: 'Farming Inputs (Murabaha)', prompt: 'Explain how Murabaha financing works for purchasing farming inputs like seeds, fertilizers, and pesticides.' },
+  { segment: 'machinery', label: 'Machinery (Ijara)', prompt: 'How does Islamic Ijara financing work for acquiring agricultural machinery and equipment?' },
+  { segment: 'advisory', label: 'Advisory Services', prompt: 'What Islamic finance structures support agricultural advisory and consulting services for farmers?' },
+  { segment: 'logistics', label: 'Logistics & Storage', prompt: 'How can Islamic finance support agricultural logistics, warehousing, and cold storage?' },
+  { segment: 'delivery', label: 'Delivery & Distribution', prompt: 'What Islamic financing models are suitable for agricultural delivery and distribution networks?' },
+  { segment: 'suppliers', label: 'Suppliers & Processors', prompt: 'How can agricultural suppliers and food processors access Islamic financing?' },
+  { segment: 'traceability', label: 'Traceability Systems', prompt: 'How can Islamic finance support investment in agricultural traceability and blockchain systems?' },
+  { segment: 'export', label: 'Export Markets', prompt: 'What Islamic finance instruments support farmers targeting export markets?' },
+  { segment: 'shariah_compliance', label: "Shari'ah Compliance", prompt: "What are the key Shari'ah principles agricultural finance structures must comply with?" },
+  { segment: 'salam', label: 'Salam (Pre-Harvest)', prompt: 'Explain how Salam contracts work as forward financing for crop production before harvest.' },
+  { segment: 'mudaraba', label: 'Mudaraba Partnership', prompt: 'How can Mudaraba profit-sharing arrangements finance farming operations in Uganda?' },
 ];
 
 const SYSTEM_CONTEXT = `You are the Agriphix Islamic Agriculture Advisor — a knowledgeable, warm, and Shari'ah-compliant assistant for Uganda's halal agricultural platform.
@@ -144,7 +145,9 @@ export default function IslamicFinanceChat() {
           <div>
             <p className="text-amber-300 text-base font-arabic mb-1">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center text-xl">☪️</div>
+              <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                <Moon className="w-5 h-5" />
+              </div>
               <div>
                 <h1 className="text-xl font-bold">Islamic Agriculture Advisor</h1>
                 <p className="text-emerald-200 text-xs">Halal · Riba-Free · Shari'ah-Compliant</p>
@@ -167,6 +170,7 @@ export default function IslamicFinanceChat() {
             <TopicButton
               key={topic.label}
               label={topic.label}
+              icon={VALUE_CHAIN_SEGMENT_ICONS[topic.segment]}
               onClick={() => sendMessage(topic.prompt)}
               disabled={loading}
             />
@@ -182,7 +186,7 @@ export default function IslamicFinanceChat() {
         {loading && (
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
-              <span className="text-sm">☪️</span>
+              <Moon className="w-4 h-4 text-emerald-700" />
             </div>
             <div className="bg-emerald-50 border border-emerald-100 rounded-2xl rounded-tl-none px-4 py-3 flex items-center gap-2">
               <Loader2 className="w-4 h-4 text-emerald-600 animate-spin" />

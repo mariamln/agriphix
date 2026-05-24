@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Upload, Plus, ChevronDown, ChevronUp, RefreshCw } from 'lucide-react';
+import { Loader2, Upload, Plus, ChevronDown, ChevronUp, RefreshCw, Sprout } from 'lucide-react';
 import HalalScoreBadge from '../components/halal/HalalScoreBadge';
 import CriteriaBreakdown from '../components/halal/CriteriaBreakdown';
 
@@ -194,7 +194,7 @@ export default function HalalCertification() {
         <Card className="border-emerald-200 shadow-lg">
           <CardHeader className="bg-emerald-50 border-b border-emerald-100">
             <CardTitle className="text-emerald-800 flex items-center gap-2">
-              <span>🌾</span> New Halal Certification Request
+              <Sprout className="w-5 h-5" /> New Halal Certification Request
             </CardTitle>
           </CardHeader>
           <CardContent className="p-6">

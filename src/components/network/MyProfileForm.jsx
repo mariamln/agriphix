@@ -6,7 +6,7 @@ import { useMyProfile } from '@/hooks/useMyProfile';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, Pencil, UserPlus, X, Plus, ArrowRight, ArrowLeft, Shield } from 'lucide-react';
+import { CheckCircle, Pencil, UserPlus, X, Plus, ArrowRight, ArrowLeft, Shield, MapPin, Save, Layers } from 'lucide-react';
 import {
   ROLES,
   CERT_OPTIONS,
@@ -14,6 +14,7 @@ import {
   roleColors,
   VERIFICATION_REQUESTED,
 } from '@/constants/profile';
+import { RoleIcon, formatRoleLabel, Wheat } from '@/constants/valueChainIcons';
 import { useTranslation } from '@/i18n/LanguageContext';
 
 /** @typedef {{ onSaved?: () => void, autoStartIfEmpty?: boolean }} MyProfileFormProps */
@@ -141,11 +142,22 @@ export default function MyProfileForm({ onSaved, autoStartIfEmpty = false }) {
           )}
           <div className="flex flex-wrap gap-1">
             {(myProfile.user_roles?.length > 0 ? myProfile.user_roles : [myProfile.user_role]).filter(Boolean).map(role => (
-              <Badge key={role} className={roleColors[role]}>{role.replace(/_/g, ' ')}</Badge>
+              <Badge key={role} className={`${roleColors[role]} gap-1 capitalize`}>
+                <RoleIcon role={role} className="w-3 h-3" />
+                {formatRoleLabel(role)}
+              </Badge>
             ))}
           </div>
-          {myProfile.specialization && <p className="text-sm text-gray-600">🌾 {myProfile.specialization}</p>}
-          {myProfile.location && <p className="text-sm text-gray-500">📍 {myProfile.location}</p>}
+          {myProfile.specialization && (
+            <p className="text-sm text-gray-600 flex items-center gap-1.5">
+              <Wheat className="w-4 h-4 text-emerald-600" /> {myProfile.specialization}
+            </p>
+          )}
+          {myProfile.location && (
+            <p className="text-sm text-gray-500 flex items-center gap-1.5">
+              <MapPin className="w-4 h-4 text-gray-400" /> {myProfile.location}
+            </p>
+          )}
           {myProfile.certification?.length > 0 && (
             <div className="flex flex-wrap gap-1 pt-1">
               {myProfile.certification.map(c => <Badge key={c} variant="outline" className="text-xs">{c}</Badge>)}
@@ -277,7 +289,7 @@ export default function MyProfileForm({ onSaved, autoStartIfEmpty = false }) {
       <div className="bg-white border-2 border-emerald-200 rounded-xl p-6 shadow-sm">
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-2">
-            <span className="text-lg">🌾</span>
+            <Layers className="w-5 h-5 text-emerald-600" />
             <h3 className="font-bold text-gray-900">Step 2 — Subscribe to Value Chain Roles</h3>
           </div>
           {myProfile && <button onClick={() => setStep(null)} className="text-gray-400 hover:text-gray-600"><X className="w-5 h-5" /></button>}
@@ -294,13 +306,16 @@ export default function MyProfileForm({ onSaved, autoStartIfEmpty = false }) {
                     ? 'border-emerald-500 bg-emerald-50 shadow-sm'
                     : 'border-gray-200 hover:border-emerald-300 bg-white'
                 }`}>
-                <div className="flex items-center justify-between mb-1">
-                  <span className={`text-sm font-semibold capitalize ${selected ? 'text-emerald-700' : 'text-gray-800'}`}>
-                    {role.replace(/_/g, ' ')}
+                <div className="flex items-center gap-2 mb-1">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${selected ? 'bg-emerald-600 text-white' : 'bg-emerald-100 text-emerald-700'}`}>
+                    <RoleIcon role={role} className="w-4 h-4" />
+                  </div>
+                  <span className={`text-sm font-semibold capitalize flex-1 ${selected ? 'text-emerald-700' : 'text-gray-800'}`}>
+                    {formatRoleLabel(role)}
                   </span>
                   {selected && <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />}
                 </div>
-                <p className="text-xs text-gray-500">{ROLE_DESCRIPTIONS[role]}</p>
+                <p className="text-xs text-gray-500 pl-10">{ROLE_DESCRIPTIONS[role]}</p>
               </button>
             );
           })}
@@ -313,7 +328,12 @@ export default function MyProfileForm({ onSaved, autoStartIfEmpty = false }) {
         {form.user_roles.length > 0 && (
           <div className="flex flex-wrap gap-1 mb-4">
             <span className="text-xs text-gray-500 mr-1 self-center">Selected:</span>
-            {form.user_roles.map(r => <Badge key={r} className={roleColors[r]}>{r.replace(/_/g, ' ')}</Badge>)}
+            {form.user_roles.map(r => (
+              <Badge key={r} className={`${roleColors[r]} gap-1 capitalize`}>
+                <RoleIcon role={r} className="w-3 h-3" />
+                {formatRoleLabel(r)}
+              </Badge>
+            ))}
           </div>
         )}
 
@@ -321,8 +341,13 @@ export default function MyProfileForm({ onSaved, autoStartIfEmpty = false }) {
           <Button variant="outline" onClick={() => setStep(1)} className="flex-1">
             <ArrowLeft className="w-4 h-4 mr-2" /> Back
           </Button>
-          <Button onClick={handleSave} disabled={saving || form.user_roles.length === 0} className="flex-1 bg-emerald-600 hover:bg-emerald-700">
-            {saving ? 'Saving...' : myProfile ? '💾 Save Changes' : '✅ Complete Registration'}
+          <Button onClick={handleSave} disabled={saving || form.user_roles.length === 0} className="flex-1 bg-emerald-600 hover:bg-emerald-700 gap-2">
+            {saving ? 'Saving...' : (
+              <>
+                {myProfile ? <Save className="w-4 h-4" /> : <CheckCircle className="w-4 h-4" />}
+                {myProfile ? 'Save Changes' : 'Complete Registration'}
+              </>
+            )}
           </Button>
         </div>
       </div>

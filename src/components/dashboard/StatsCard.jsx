@@ -1,12 +1,11 @@
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { ArrowUp, ArrowDown, BarChart3 } from 'lucide-react';
 
 const COLOR_CLASSES = {
-  emerald: 'from-emerald-500 to-emerald-600',
-  amber: 'from-amber-500 to-amber-600',
-  blue: 'from-blue-500 to-blue-600',
-  purple: 'from-purple-500 to-purple-600',
+  primary: 'bg-primary/10 text-primary',
+  accent: 'bg-accent/15 text-accent-foreground',
+  info: 'bg-info/10 text-info',
+  muted: 'bg-muted text-muted-foreground',
 };
 
 /**
@@ -25,40 +24,35 @@ export default function StatsCard({
   icon: Icon = BarChart3,
   trend,
   trendValue,
-  color = 'emerald',
+  color = 'primary',
 }) {
-  const palette = COLOR_CLASSES[color] || COLOR_CLASSES.emerald;
+  const palette = COLOR_CLASSES[color] || COLOR_CLASSES.primary;
   const displayValue = value == null || value === '' ? '—' : value;
 
   return (
-    <Card className="relative overflow-hidden border-0 shadow-md hover:shadow-xl transition-all duration-300">
-      <div
-        className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${palette} opacity-5 rounded-full transform translate-x-8 -translate-y-8`}
-      />
-      <CardContent className="p-6">
-        <div className="flex items-start justify-between">
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-gray-600">{title}</p>
-            <p className="text-3xl font-bold text-gray-900">{displayValue}</p>
-            {trend && (
-              <div className="flex items-center space-x-1">
-                {trend === 'up' ? (
-                  <ArrowUp className="w-4 h-4 text-green-600" />
-                ) : (
-                  <ArrowDown className="w-4 h-4 text-red-600" />
-                )}
-                <span className={`text-sm font-medium ${trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
-                  {trendValue}
-                </span>
-                <span className="text-sm text-gray-500">vs last month</span>
-              </div>
-            )}
-          </div>
-          <div className={`p-3 bg-gradient-to-br ${palette} rounded-xl shadow-lg`}>
-            <Icon className="w-6 h-6 text-white" />
-          </div>
+    <div className="surface-card p-6 hover:shadow-elevated transition-shadow duration-300">
+      <div className="flex items-start justify-between gap-4">
+        <div className="space-y-2 min-w-0">
+          <p className="text-sm font-medium text-muted-foreground">{title}</p>
+          <p className="text-3xl font-bold text-foreground tracking-tight">{displayValue}</p>
+          {trend && (
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {trend === 'up' ? (
+                <ArrowUp className="w-4 h-4 text-success" />
+              ) : (
+                <ArrowDown className="w-4 h-4 text-destructive" />
+              )}
+              <span className={`text-sm font-medium ${trend === 'up' ? 'text-success' : 'text-destructive'}`}>
+                {trendValue}
+              </span>
+              <span className="text-sm text-muted-foreground">vs last month</span>
+            </div>
+          )}
         </div>
-      </CardContent>
-    </Card>
+        <div className={`p-3 rounded-xl shrink-0 ${palette}`}>
+          <Icon className="w-5 h-5" />
+        </div>
+      </div>
+    </div>
   );
 }
