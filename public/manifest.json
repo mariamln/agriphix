@@ -1,0 +1,16 @@
+{
+  "name": "Agriphix",
+  "short_name": "Agriphix",
+  "description": "Uganda's halal agriculture platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ecfdf5",
+  "theme_color": "#047857",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

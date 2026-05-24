@@ -1,0 +1,103 @@
+{
+  "name": "Crop",
+  "type": "object",
+  "properties": {
+    "crop_name": {
+      "type": "string",
+      "description": "Name of the crop or livestock type"
+    },
+    "production_type": {
+      "type": "string",
+      "enum": [
+        "crop",
+        "livestock"
+      ],
+      "default": "crop",
+      "description": "Whether this is a crop or livestock production"
+    },
+    "variety": {
+      "type": "string",
+      "description": "Specific variety, breed, or cultivar"
+    },
+    "planted_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date crop was planted or livestock acquired"
+    },
+    "expected_harvest_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "actual_harvest_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "land_area": {
+      "type": "number",
+      "description": "Area in hectares (for crops) or grazing area"
+    },
+    "location": {
+      "type": "string",
+      "description": "Farm location"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planning",
+        "planted",
+        "growing",
+        "harvesting",
+        "harvested",
+        "sold"
+      ],
+      "default": "planning"
+    },
+    "expected_yield": {
+      "type": "number",
+      "description": "Expected yield in kg (crops) or head count (livestock)"
+    },
+    "actual_yield": {
+      "type": "number",
+      "description": "Actual yield in kg or head count"
+    },
+    "quality_grade": {
+      "type": "string",
+      "enum": [
+        "premium",
+        "grade_a",
+        "grade_b",
+        "standard"
+      ]
+    },
+    "farming_method": {
+      "type": "string",
+      "enum": [
+        "organic",
+        "conventional",
+        "precision",
+        "hydroponic",
+        "greenhouse",
+        "free_range",
+        "zero_grazing",
+        "semi_intensive"
+      ]
+    },
+    "head_count": {
+      "type": "number",
+      "description": "Number of animals (for livestock only)"
+    },
+    "livestock_product": {
+      "type": "string",
+      "description": "Primary product: milk, meat, eggs, wool, etc. (livestock only)"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "crop_name",
+    "planted_date",
+    "land_area",
+    "location"
+  ]
+}

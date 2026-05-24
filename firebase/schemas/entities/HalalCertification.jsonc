@@ -1,0 +1,91 @@
+{
+  "name": "HalalCertification",
+  "type": "object",
+  "properties": {
+    "crop_id": {
+      "type": "string",
+      "description": "Reference to Crop record"
+    },
+    "crop_name": {
+      "type": "string",
+      "description": "Name of the crop"
+    },
+    "farmer_name": {
+      "type": "string"
+    },
+    "farm_location": {
+      "type": "string"
+    },
+    "crop_photo_url": {
+      "type": "string",
+      "description": "Uploaded crop photo URL"
+    },
+    "certification_doc_url": {
+      "type": "string",
+      "description": "Uploaded certification document URL"
+    },
+    "farming_method": {
+      "type": "string",
+      "description": "Organic, conventional, hydroponic, etc."
+    },
+    "chemicals_used": {
+      "type": "string",
+      "description": "List of chemicals/pesticides/fertilizers used"
+    },
+    "water_source": {
+      "type": "string",
+      "description": "Source of water for irrigation"
+    },
+    "soil_treatment": {
+      "type": "string",
+      "description": "Soil preparation and treatment methods"
+    },
+    "additional_notes": {
+      "type": "string"
+    },
+    "halal_score": {
+      "type": "number",
+      "description": "AI-generated Halal Compliance Score (0-100)"
+    },
+    "compliance_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "compliant",
+        "non_compliant",
+        "needs_review"
+      ],
+      "default": "pending"
+    },
+    "ai_analysis": {
+      "type": "string",
+      "description": "Full AI analysis text"
+    },
+    "violations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of Shari'ah violations found"
+    },
+    "recommendations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "AI recommendations to improve compliance"
+    },
+    "criteria_scores": {
+      "type": "object",
+      "description": "Breakdown scores per criterion"
+    },
+    "assessed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "crop_name",
+    "farming_method"
+  ]
+}

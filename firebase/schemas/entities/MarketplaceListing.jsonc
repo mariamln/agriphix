@@ -1,0 +1,108 @@
+{
+  "name": "MarketplaceListing",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Listing title"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "produce",
+        "equipment",
+        "livestock",
+        "seeds",
+        "other"
+      ],
+      "description": "Category of listing"
+    },
+    "description": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number",
+      "description": "Asking price in USD"
+    },
+    "price_unit": {
+      "type": "string",
+      "description": "e.g., per kg, per head, per day"
+    },
+    "quantity": {
+      "type": "number"
+    },
+    "quantity_unit": {
+      "type": "string",
+      "description": "kg, heads, units, etc."
+    },
+    "location": {
+      "type": "string"
+    },
+    "seller_name": {
+      "type": "string"
+    },
+    "seller_email": {
+      "type": "string"
+    },
+    "seller_phone": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "sold",
+        "reserved",
+        "expired"
+      ],
+      "default": "active"
+    },
+    "listing_type": {
+      "type": "string",
+      "enum": [
+        "sale",
+        "rent",
+        "exchange"
+      ],
+      "default": "sale"
+    },
+    "negotiable": {
+      "type": "boolean",
+      "default": true
+    },
+    "harvest_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "quality_grade": {
+      "type": "string",
+      "enum": [
+        "premium",
+        "grade_a",
+        "grade_b",
+        "standard"
+      ]
+    },
+    "certifications": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "views": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "title",
+    "category",
+    "price",
+    "location",
+    "seller_name",
+    "seller_email"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "name": "UserProfile",
+  "type": "object",
+  "properties": {
+    "user_roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "All value chain roles the user subscribes to"
+    },
+    "user_role": {
+      "type": "string",
+      "enum": [
+        "farmer",
+        "landowner",
+        "buyer",
+        "supplier",
+        "aggregator",
+        "processor",
+        "retailer",
+        "consumer",
+        "service_provider"
+      ],
+      "description": "Primary role (kept for backwards compatibility)"
+    },
+    "organization_name": {
+      "type": "string",
+      "description": "Company or organization name"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string",
+      "description": "Primary location or region"
+    },
+    "specialization": {
+      "type": "string",
+      "description": "Crop types, services, or products specialized in"
+    },
+    "certification": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Certifications held (e.g., Organic, GlobalGAP)"
+    },
+    "land_size": {
+      "type": "number",
+      "description": "Size of land in hectares (for farmers/landowners)"
+    },
+    "verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the profile has been verified"
+    }
+  },
+  "required": []
+}

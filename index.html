@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Agriphix — Uganda's halal agriculture platform for market coordination, riba-free financing, and traceability." />
+    <meta name="theme-color" content="#047857" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    />
+    <link rel="manifest" href="/manifest.json" />
+    <title>Agriphix — Halal Agriculture Platform</title>
+    <script>
+      (function () {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function (regs) {
+            regs.forEach(function (r) { r.unregister(); });
+          });
+        }
+        if ('caches' in window) {
+          caches.keys().then(function (keys) {
+            keys.forEach(function (k) { caches.delete(k); });
+          });
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root">
+      <div style="padding: 24px; font-family: system-ui, sans-serif; color: #0f172a;">
+        Loading Agriphix…
+      </div>
+    </div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      setTimeout(function () {
+        var root = document.getElementById('root');
+        if (!root) return;
+        var text = root.textContent || '';
+        if (text.indexOf('Loading Agriphix') !== -1) {
+          root.innerHTML =
+            '<div style="padding:24px;font-family:system-ui,sans-serif;max-width:640px;margin:40px auto;color:#0f172a">' +
+            '<h1 style="font-size:20px;color:#991b1b;margin:0 0 12px">App script did not start</h1>' +
+            '<p style="line-height:1.5;margin:0 0 12px">The page loaded but React never mounted. Open DevTools → Network and confirm <code>/src/main.jsx</code> returns 200. Then hard refresh (Cmd+Shift+R) or try an incognito window.</p>' +
+            '<button type="button" onclick="location.reload()" style="padding:8px 16px;background:#047857;color:white;border:none;border-radius:8px;cursor:pointer">Reload</button>' +
+            '</div>';
+        }
+      }, 12000);
+    </script>
+  </body>
+</html>

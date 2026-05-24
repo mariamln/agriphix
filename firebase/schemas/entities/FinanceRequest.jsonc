@@ -1,0 +1,99 @@
+{
+  "name": "FinanceRequest",
+  "type": "object",
+  "properties": {
+    "crop_type": {
+      "type": "string",
+      "description": "Crop or activity to be financed"
+    },
+    "amount_requested": {
+      "type": "number",
+      "description": "Amount in USD"
+    },
+    "purpose": {
+      "type": "string",
+      "description": "Purpose of financing"
+    },
+    "land_area": {
+      "type": "number",
+      "description": "Area in hectares"
+    },
+    "expected_yield": {
+      "type": "number"
+    },
+    "expected_revenue": {
+      "type": "number"
+    },
+    "repayment_period": {
+      "type": "number",
+      "description": "Repayment period in months"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "under_review",
+        "approved",
+        "disbursed",
+        "rejected",
+        "repaid"
+      ],
+      "default": "pending"
+    },
+    "collateral": {
+      "type": "string",
+      "description": "Collateral offered"
+    },
+    "farm_location": {
+      "type": "string"
+    },
+    "application_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "decision_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "islamic_instrument": {
+      "type": "string",
+      "enum": [
+        "Murabaha",
+        "Ijara",
+        "Musharaka",
+        "Mudaraba",
+        "Salam",
+        "Istisna",
+        "Takaful",
+        "Sukuk",
+        "Qard Hasan"
+      ],
+      "description": "Islamic finance instrument chosen"
+    },
+    "value_chain_segment": {
+      "type": "string",
+      "enum": [
+        "land",
+        "farming_inputs",
+        "machinery",
+        "advisory",
+        "logistics",
+        "delivery",
+        "suppliers",
+        "traceability",
+        "export",
+        "shariah_compliance"
+      ],
+      "description": "Agricultural value chain segment"
+    }
+  },
+  "required": [
+    "crop_type",
+    "amount_requested",
+    "purpose",
+    "land_area"
+  ]
+}

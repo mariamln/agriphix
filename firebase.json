@@ -1,0 +1,9 @@
+{
+  "firestore": {
+    "rules": "firebase/firestore.rules",
+    "database": "agriphix"
+  },
+  "storage": {
+    "rules": "firebase/storage.rules"
+  }
+}

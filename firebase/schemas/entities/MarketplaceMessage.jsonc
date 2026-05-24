@@ -1,0 +1,55 @@
+{
+  "name": "MarketplaceMessage",
+  "type": "object",
+  "properties": {
+    "listing_id": {
+      "type": "string",
+      "description": "ID of the marketplace listing"
+    },
+    "listing_title": {
+      "type": "string"
+    },
+    "sender_email": {
+      "type": "string"
+    },
+    "sender_name": {
+      "type": "string"
+    },
+    "recipient_email": {
+      "type": "string"
+    },
+    "recipient_name": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "offered_price": {
+      "type": "number",
+      "description": "Counter-offer price if negotiating"
+    },
+    "message_type": {
+      "type": "string",
+      "enum": [
+        "inquiry",
+        "offer",
+        "counter_offer",
+        "accept",
+        "decline",
+        "general"
+      ],
+      "default": "inquiry"
+    },
+    "read": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "listing_id",
+    "sender_email",
+    "sender_name",
+    "recipient_email",
+    "message"
+  ]
+}
